@@ -10,4 +10,6 @@ public interface DataService extends IService<DataBean> {
 //    List<DataBean> list();
 //
 //    List<DataBean> listById(int id);
+
+    String getDataUpdatedTime();
 }

@@ -12,7 +12,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,22 +26,30 @@ public class DataHandler {
 
     public static String urlStr = "https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5";
 
+    private static String dataUpdatedTime = "";
+
+    public static String getDataUpdatedTime() {
+        return dataUpdatedTime;
+    }
+
     public static void main(String[] args) throws Exception {
         getData();
     }
 
 
-//    @PostConstruct
+    @PostConstruct
     public void saveData() {
+
         List<DataBean> dataBeans = getData();
         // 先将数据清空  然后存储数据
         dataService.remove(null);
         dataService.saveBatch(dataBeans);
-
+        System.out.println("data saved");
     }
 
     // 配置定时执行的注解  支持cron表达式
 //    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0 0/1 * * ?")
     public void updateData() {
         System.out.println("更新数据");
 
@@ -80,7 +90,7 @@ public class DataHandler {
         // 此时增加了一层处理  而且data对应的数据格式是string
         String subStr = (String) map.get("data");
         Map subMap = gson.fromJson(subStr, Map.class);
-
+        dataUpdatedTime = (String) subMap.get("lastUpdateTime");
         ArrayList areaList = (ArrayList) subMap.get("areaTree");
         Map dataMap = (Map) areaList.get(0);
         ArrayList childrenList = (ArrayList) dataMap.get("children");

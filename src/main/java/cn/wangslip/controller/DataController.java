@@ -26,7 +26,7 @@ public class DataController {
     @Autowired
     private DataService dataService;
 
-    private static String dataUpdatedTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+//    private static String dataUpdatedTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
     @GetMapping("/")
     public String list(Model model) {
@@ -96,8 +96,8 @@ public class DataController {
 
         model.addAttribute("nameList", new Gson().toJson(nameList));
         model.addAttribute("fromAbroadList", new Gson().toJson(fromAbroadList));
-        System.out.println(dataUpdatedTime);
-        model.addAttribute("dataUpdatedTime",dataUpdatedTime);
+        System.out.println(dataService.getDataUpdatedTime());
+        model.addAttribute("dataUpdatedTime",dataService.getDataUpdatedTime());
         return "list";
     }
 

@@ -46,7 +46,7 @@ public class HttpURLConnectionUtil {
             // 逐行读取  不为空就继续
             while ((line = br.readLine()) != null) {
                 result.append(line);
-                System.out.print(line);
+//                System.out.print(line);
             }
 
 

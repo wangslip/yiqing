@@ -26,4 +26,8 @@ public class DataServiceImpl extends ServiceImpl<DataMapper, DataBean>
 //        }
 //        return list();
 //    }
+
+    public String getDataUpdatedTime() {
+        return DataHandler.getDataUpdatedTime();
+    }
 }
